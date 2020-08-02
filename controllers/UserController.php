@@ -27,6 +27,7 @@ class UserController
             $password = password_hash($password, PASSWORD_DEFAULT);
 
             User::register($name, $role, $password);
+            header("Location: /user/login");
         }
         require_once(ROOT . '/views/user/register.php');
         return true;
