@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * Class TaskController
@@ -8,7 +9,7 @@ class TaskController
     /**
      * @return bool
      */
-    public function actionIndex()
+    public function index(): bool
     {
         if (User::checkLogged()) {
             $userTasks = Task::getUserTasks($_SESSION['user_id']);
@@ -21,7 +22,7 @@ class TaskController
     /**
      * @return bool
      */
-    public function actionEdit()
+    public function edit(): bool
     {
         if (User::checkLogged()) {
             $row = 1;
@@ -44,7 +45,7 @@ class TaskController
     /**
      * @return bool
      */
-    public function actionList()
+    public function getList(): bool
     {
         if (User::checkLogged()) {
             $tasks = Task::getAllTasks();
@@ -58,7 +59,7 @@ class TaskController
     /**
      * @return bool
      */
-    public function actionAssign()
+    public function assign(): bool
     {
         if (User::checkLogged()) {
             $res = explode(',', $_POST['assign-to']);
@@ -74,7 +75,7 @@ class TaskController
     /**
      * @return bool
      */
-    public function actionDone()
+    public function done(): bool
     {
         if (User::checkLogged()) {
             $taskId    = $_POST['done'];
@@ -88,7 +89,7 @@ class TaskController
     /**
      * @return bool
      */
-    public function actionArchive()
+    public function archive(): bool
     {
         if (User::checkLogged()) {
             $tasks = Task::getArchiveTasks($_SESSION['user_id']);

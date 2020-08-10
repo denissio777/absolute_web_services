@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * Class UserController
@@ -8,7 +9,7 @@ class UserController
     /**
      * @return bool
      */
-    public function actionRegister()
+    public function register()
     {
         $name     = false;
         $role     = false;
@@ -36,7 +37,7 @@ class UserController
     /**
      * @return bool
      */
-    public function actionLogin()
+    public function login()
     {
         $name     = false;
         $password = false;
@@ -65,7 +66,7 @@ class UserController
     /**
      *
      */
-    public function actionLogout()
+    public function logout(): void
     {
         session_start();
         unset($_SESSION["user_id"]);

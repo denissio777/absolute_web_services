@@ -1,16 +1,17 @@
 <?php
+declare(strict_types=1);
 
 /**
- * Class Db
+ * Class ConnectToDB
  */
-class Db
+class ConnectToDB
 {
     /**
      * @return PDO
      */
     public static function getConnection()
     {
-        $paramsPath = ROOT . '/config/db_params.php';
+        $paramsPath = ROOT . '/config/db.php';
         $params     = include($paramsPath);
         $dsn        = "mysql:host={$params['host']};
                        dbname={$params['dbname']}";

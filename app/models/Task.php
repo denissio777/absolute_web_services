@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * Class Task
@@ -12,7 +13,7 @@ class Task
      */
     public static function importTasks($data)
     {
-        $db      = Db::getConnection();
+        $db      = ConnectToDB::getConnection();
         $title   = $data[0];
         $content = $data[1];
         $sql     = 'INSERT INTO tasks (title, content) '
@@ -31,7 +32,7 @@ class Task
      */
     public static function getAllTasks()
     {
-        $db        = Db::getConnection();
+        $db        = ConnectToDB::getConnection();
         $result    = $db->query('SELECT id, title, content FROM tasks WHERE is_done = 0 ORDER BY id ASC');
         $tasksList = [];
         $i         = 0;
@@ -50,7 +51,7 @@ class Task
      */
     public static function getUserTasks($user_id)
     {
-        $db     = Db::getConnection();
+        $db     = ConnectToDB::getConnection();
         $sql    = 'SELECT * FROM tasks WHERE user_id = :user_id AND is_done = 0';
         $result = $db->prepare($sql);
         $result->bindParam(':user_id', $user_id, PDO::PARAM_INT);
@@ -68,7 +69,7 @@ class Task
      */
     public static function getArchiveTasks($user_id)
     {
-        $db     = Db::getConnection();
+        $db     = ConnectToDB::getConnection();
         $sql    = 'SELECT * FROM tasks WHERE user_id = :user_id AND is_done = 1';
         $result = $db->prepare($sql);
         $result->bindParam(':user_id', $user_id, PDO::PARAM_INT);
@@ -87,7 +88,7 @@ class Task
      */
     public static function assignTask($user_id, $id)
     {
-        $db     = Db::getConnection();
+        $db     = ConnectToDB::getConnection();
         $sql    = "UPDATE tasks SET user_id = :user_id WHERE id = :id";
         $result = $db->prepare($sql);
         $result->bindParam(':user_id', $user_id, PDO::PARAM_INT);
@@ -104,7 +105,7 @@ class Task
      */
     public static function closeTask($id)
     {
-        $db     = Db::getConnection();
+        $db     = ConnectToDB::getConnection();
         $sql    = "UPDATE tasks SET is_done = 1 WHERE id = :id";
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);

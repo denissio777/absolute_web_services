@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 class Router
 {
@@ -19,7 +20,7 @@ class Router
     /**
      * @return string
      */
-    private function getURI()
+    private function getURI(): string
     {
         if (!empty($_SERVER['REQUEST_URI'])) {
             return trim($_SERVER['REQUEST_URI'], '/');
@@ -29,7 +30,7 @@ class Router
     /**
      *
      */
-    public function run()
+    public function run(): void
     {
         $uri = $this->getURI();
 
@@ -38,15 +39,15 @@ class Router
             if (preg_match("~$uriPattern~", $uri)) {
                 $internalRoute  = preg_replace("~$uriPattern~", $path, $uri);
                 $segments       = explode('/', $internalRoute);
-                $controllerName = array_shift($segments) . 'Controller';
+                $controllerName = array_shift($segments);
                 $controllerName = ucfirst($controllerName);
-                $actionName     = 'action' . ucfirst(array_shift($segments));
+                $actionName     = array_shift($segments);
                 $parameters     = $segments;
-                $controllerFile = ROOT . '/controllers/' .
+                $controllerFile = ROOT . '/app/controllers/' .
                                         $controllerName . '.php';
 
                 if (file_exists($controllerFile)) {
-                    include_once($controllerFile);
+                    require_once($controllerFile);
                 }
                 $controllerObject = new $controllerName;
                 $result           = call_user_func_array([$controllerObject, $actionName], $parameters);

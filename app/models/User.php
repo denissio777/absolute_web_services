@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * Class User
@@ -13,7 +14,7 @@ class User
      */
     public static function register($name, $role, $password)
     {
-        $db     = Db::getConnection();
+        $db     = ConnectToDB::getConnection();
         $sql    = 'INSERT INTO users (name, role, password) '
                 .'VALUES (:name, :role, :password)';
         $result = $db->prepare($sql);
@@ -32,7 +33,7 @@ class User
      */
     public function checkUserData($name)
     {
-        $db     = Db::getConnection();
+        $db     = ConnectToDB::getConnection();
         $sql    = 'SELECT * FROM users WHERE name = :name';
         $result = $db->prepare($sql);
         $result->bindParam(':name', $name, PDO::PARAM_STR);
@@ -122,7 +123,7 @@ class User
      */
     public static function getUserById($id)
     {
-        $db     = Db::getConnection();
+        $db     = ConnectToDB::getConnection();
         $sql    = 'SELECT * FROM users WHERE id = :id';
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
@@ -136,7 +137,7 @@ class User
      */
     public static function getAllUsers()
     {
-        $db        = Db::getConnection();
+        $db        = ConnectToDB::getConnection();
         $result    = $db->query('SELECT id, name FROM users ORDER BY id ASC');
         $usersList = [];
         $i = 0;
